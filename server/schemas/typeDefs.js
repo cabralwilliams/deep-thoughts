@@ -19,12 +19,18 @@ const typeDefs = gql`
         username: String
         reactionCount: Int
         reactions: [Reaction]
-    },
+    }
+
     type Reaction {
         _id: ID
         reactionBody: String
         createAt: String
         username: String
+    }
+
+    type Auth {
+        token: ID!
+        user: User
     }
 
     type Query {
@@ -43,10 +49,6 @@ const typeDefs = gql`
         addFriend(friendId: ID!): User
     }
 
-    type Auth {
-        token: ID!
-        user: User
-    }
 `;
 
 //export the typeDefs
