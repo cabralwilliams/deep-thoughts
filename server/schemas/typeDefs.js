@@ -24,7 +24,7 @@ const typeDefs = gql`
     type Reaction {
         _id: ID
         reactionBody: String
-        createAt: String
+        createdAt: String
         username: String
     }
 
