@@ -11,16 +11,27 @@ import Profile from './pages/Profile';
 import Signup from './pages/Signup';
 import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { setContext } from '@apollo/client/link/context';
 
 //Establishes link to GraphQL server at /graphql endpoint
 const httpLink = createHttpLink({
   uri: '/graphql'
 });
 
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('id_token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : ''
+    }
+  };
+});
+
 //Instantiate Apollo Client instance and create connection to endpoint above
 //Next, instantiate new cache object
 const client = new ApolloClient({
-  link: httpLink,
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache()
 });
 
